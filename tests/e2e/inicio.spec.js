@@ -15,7 +15,24 @@ test('criterio 0: al abrir la URL se ve el nombre del proyecto', async ({ page }
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('prueba');
 });
 
-test('criterio 1: en una pestaña nueva carga la misma página sin login', async ({ context }) => {
+test('criterio 1: crear y editar una tarea persiste el título actualizado tras recargar', async ({ page }) => {
+  await page.goto('/');
+  await page.getByLabel('Título', { exact: true }).fill('Comprar leche');
+  await page.getByRole('button', { name: 'Crear' }).click();
+
+  const item = page.getByTestId('task-item');
+  await expect(item).toHaveCount(1);
+  await item.getByRole('button', { name: 'Editar' }).click();
+  await item.getByLabel('Editar título').fill('Comprar pan');
+  await item.getByRole('button', { name: 'Guardar' }).click();
+  await expect(page.getByTestId('task-title')).toHaveText(['Comprar pan']);
+
+  await page.reload();
+  await expect(page.getByTestId('task-item')).toHaveCount(1);
+  await expect(page.getByTestId('task-title')).toHaveText(['Comprar pan']);
+});
+
+test('regresión: en una pestaña nueva carga la misma página sin login', async ({ context }) => {
   const first = await context.newPage();
   await first.goto('/');
   await expect(first.getByRole('heading', { level: 1 })).toHaveText('prueba');
