@@ -40,7 +40,7 @@ export function TrashIcon() {
   );
 }
 
-export default function TaskItem({ task, onRename, onToggle, onDelete }) {
+export default function TaskItem({ task, selected = false, onSelect, onRename, onToggle, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(task.titulo);
   const [error, setError] = useState('');
@@ -77,7 +77,8 @@ export default function TaskItem({ task, onRename, onToggle, onDelete }) {
     <li
       data-testid="task-item"
       data-completed={task.completada ? 'true' : 'false'}
-      className={task.completada ? 'completada' : undefined}
+      data-selected={selected ? 'true' : undefined}
+      className={[task.completada && 'completada', selected && 'seleccionada'].filter(Boolean).join(' ') || undefined}
     >
       {editing ? (
         <form className="edicion" onSubmit={handleSubmit} noValidate>
@@ -114,6 +115,19 @@ export default function TaskItem({ task, onRename, onToggle, onDelete }) {
         </form>
       ) : (
         <div className="tarea">
+          {onSelect && (
+            <span className="seleccionar-celda">
+              <input
+                type="checkbox"
+                className="seleccionar"
+                data-testid="task-select"
+                aria-label={`Seleccionar: ${task.titulo}`}
+                title="Seleccionar"
+                checked={selected}
+                onChange={(e) => onSelect(task.id, e.target.checked)}
+              />
+            </span>
+          )}
           <input
             type="checkbox"
             data-testid="task-toggle"

@@ -31,6 +31,27 @@ export function toggleTaskCompleted(tasks, id) {
   return tasks.map((task) => (task.id === id ? { ...task, completada: !task.completada } : task));
 }
 
+export const SIN_CARPETA = 'Sin carpeta';
+
+// Un grupo por carpeta (en su orden, aunque esté vacía) y "Sin carpeta" al final.
+// Las tareas cuya carpeta ya no existe caen en "Sin carpeta".
+export function groupTasksByFolder(tasks, folders) {
+  const groups = folders.map((folder) => ({ id: folder.id, nombre: folder.nombre, tasks: [] }));
+  const byId = new Map(groups.map((group) => [group.id, group]));
+  const sinCarpeta = { id: null, nombre: SIN_CARPETA, tasks: [] };
+  for (const task of tasks) {
+    (byId.get(task.carpeta_id) ?? sinCarpeta).tasks.push(task);
+  }
+  return [...groups, sinCarpeta];
+}
+
+export function assignTasksToFolder(tasks, ids, carpetaId) {
+  const selected = new Set(ids);
+  return tasks.map((task) =>
+    selected.has(task.id) ? { ...task, carpeta_id: carpetaId || null } : task,
+  );
+}
+
 export function deleteTask(tasks, id) {
   return tasks.filter((task) => task.id !== id);
 }

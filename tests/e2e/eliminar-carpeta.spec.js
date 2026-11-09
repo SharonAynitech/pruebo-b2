@@ -65,7 +65,8 @@ test('US-02-3 criterio 1: con tareas, el diálogo muestra cuántas se borran y e
   await dialog.getByTestId('confirm-delete-folder').click();
 
   await expect(page.getByTestId('folder-name')).toHaveText(['Casa']);
-  await expect(page.getByTestId('task-title')).toHaveText(['Comprar leche', 'Regar plantas']);
+  // Desde US-03-1 la lista se agrupa: primero Casa, luego "Sin carpeta".
+  await expect(page.getByTestId('task-title')).toHaveText(['Regar plantas', 'Comprar leche']);
 
   const stored = await page.evaluate(() => ({
     carpetas: JSON.parse(localStorage.getItem('prueba.carpetas')).map((c) => c.nombre),
@@ -75,7 +76,7 @@ test('US-02-3 criterio 1: con tareas, el diálogo muestra cuántas se borran y e
 
   await page.reload();
   await expect(page.getByTestId('folder-name')).toHaveText(['Casa']);
-  await expect(page.getByTestId('task-title')).toHaveText(['Comprar leche', 'Regar plantas']);
+  await expect(page.getByTestId('task-title')).toHaveText(['Regar plantas', 'Comprar leche']);
 });
 
 test('US-02-3: con una sola tarea el texto usa singular', async ({ page }) => {
