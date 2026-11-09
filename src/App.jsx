@@ -8,11 +8,14 @@ import {
   toggleTaskCompleted,
   updateTaskTitle,
 } from './tasks.js';
+import { createFolder, loadFolders, saveFolders } from './folders.js';
 import TaskItem from './TaskItem.jsx';
 import ConfirmDelete from './ConfirmDelete.jsx';
+import FolderManager from './FolderManager.jsx';
 
 export default function App() {
   const [tasks, setTasks] = useState(() => loadTasks());
+  const [folders, setFolders] = useState(() => loadFolders());
   const [titulo, setTitulo] = useState('');
   const [error, setError] = useState('');
   // Aviso temporal tras cada cambio; `id` reinicia el temporizador si se repite el texto.
@@ -57,11 +60,20 @@ export default function App() {
     setPendingDelete(null);
   }
 
+  function handleCreateFolder(nombre, descripcion) {
+    const next = [...folders, createFolder(nombre, descripcion)];
+    saveFolders(next);
+    setFolders(next);
+    setNotice({ text: 'Carpeta creada', id: Date.now() });
+  }
+
   return (
     <main className="app">
       <header>
         <h1>prueba</h1>
       </header>
+
+      <FolderManager folders={folders} tasks={tasks} onCreate={handleCreateFolder} />
 
       <form className="crear" onSubmit={handleSubmit} noValidate>
         <label htmlFor="titulo">Título</label>
