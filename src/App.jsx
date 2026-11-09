@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import {
+  assignTasksToFolder,
   createTask,
   deleteTask,
+  groupTasksByFolder,
   isValidTitle,
   loadTasks,
   saveTasks,
@@ -16,7 +18,9 @@ import {
   renameFolder,
   saveFolders,
 } from './folders.js';
-import TaskItem from './TaskItem.jsx';
+import TaskTable from './TaskTable.jsx';
+import TaskBoard from './TaskBoard.jsx';
+import SelectionBar from './SelectionBar.jsx';
 import ConfirmDelete from './ConfirmDelete.jsx';
 import ConfirmDeleteFolder from './ConfirmDeleteFolder.jsx';
 import FolderManager from './FolderManager.jsx';
@@ -31,7 +35,13 @@ export default function App() {
   const [notice, setNotice] = useState(null);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [pendingFolderDelete, setPendingFolderDelete] = useState(null);
+  const [view, setView] = useState('tabla');
+  const [selection, setSelection] = useState(() => new Set());
   const inputRef = useRef(null);
+
+  // Solo cuentan las seleccionadas que siguen existiendo (p. ej. tras eliminar una tarea).
+  const selected = new Set(tasks.filter((t) => selection.has(t.id)).map((t) => t.id));
+  const groups = groupTasksByFolder(tasks, folders);
 
   useEffect(() => {
     if (!notice) return undefined;
@@ -69,6 +79,29 @@ export default function App() {
   function handleDelete(id) {
     commit(deleteTask(tasks, id), 'Tarea eliminada');
     setPendingDelete(null);
+  }
+
+  function handleSelect(id, checked) {
+    setSelection((prev) => {
+      const next = new Set(prev);
+      if (checked) next.add(id);
+      else next.delete(id);
+      return next;
+    });
+  }
+
+  function handleAssign(destino) {
+    const n = selected.size;
+    commit(
+      assignTasksToFolder(tasks, [...selected], destino),
+      n === 1 ? 'Tarea asignada' : `${n} tareas asignadas`,
+    );
+    setSelection(new Set());
+  }
+
+  function changeView(next) {
+    setView(next);
+    setSelection(new Set());
   }
 
   function commitFolders(next, text) {
@@ -151,18 +184,51 @@ export default function App() {
       </form>
 
       <section className="tareas" aria-labelledby="tareas-titulo">
-        <h2 id="tareas-titulo">Tareas</h2>
-        <ul data-testid="task-list">
-          {tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              onRename={handleRename}
-              onToggle={handleToggle}
-              onDelete={setPendingDelete}
-            />
-          ))}
-        </ul>
+        <div className="tareas-cabecera">
+          <h2 id="tareas-titulo">Tareas</h2>
+          <div className="vistas" role="group" aria-label="Vista">
+            <button
+              type="button"
+              className="secundario"
+              data-testid="view-table"
+              aria-pressed={view === 'tabla'}
+              onClick={() => changeView('tabla')}
+            >
+              Tabla
+            </button>
+            <button
+              type="button"
+              className="secundario"
+              data-testid="view-board"
+              aria-pressed={view === 'tablero'}
+              onClick={() => changeView('tablero')}
+            >
+              Tablero
+            </button>
+          </div>
+        </div>
+
+        {view === 'tabla' && selected.size > 0 && (
+          <SelectionBar
+            count={selected.size}
+            folders={folders}
+            onAssign={handleAssign}
+            onClear={() => setSelection(new Set())}
+          />
+        )}
+
+        {view === 'tabla' ? (
+          <TaskTable
+            groups={groups}
+            selected={selected}
+            onSelect={handleSelect}
+            onRename={handleRename}
+            onToggle={handleToggle}
+            onDelete={setPendingDelete}
+          />
+        ) : (
+          <TaskBoard groups={groups} />
+        )}
       </section>
 
       {/* La región viva existe siempre para que los lectores de pantalla anuncien cada aviso. */}

@@ -1,8 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  assignTasksToFolder,
   createTask,
   deleteTask,
+  groupTasksByFolder,
   isValidTitle,
   loadTasks,
   saveTasks,
@@ -78,6 +80,42 @@ test('toggleTaskCompleted alterna solo la tarea indicada', () => {
   assert.equal(a.completada, false);
   const twice = toggleTaskCompleted(once, a.id);
   assert.deepEqual(twice, [a, b]);
+});
+
+test('groupTasksByFolder agrupa por carpeta en su orden y deja "Sin carpeta" al final', () => {
+  const folders = [
+    { id: 'a', nombre: 'Trabajo' },
+    { id: 'b', nombre: 'Casa' },
+  ];
+  const tasks = [
+    { id: 't1', carpeta_id: 'b' },
+    { id: 't2', carpeta_id: null },
+    { id: 't3', carpeta_id: 'a' },
+    { id: 't4' },
+    { id: 't5', carpeta_id: 'borrada' },
+    { id: 't6', carpeta_id: 'a' },
+  ];
+  const groups = groupTasksByFolder(tasks, folders);
+  assert.deepEqual(
+    groups.map((g) => [g.id, g.nombre, g.tasks.map((t) => t.id)]),
+    [
+      ['a', 'Trabajo', ['t3', 't6']],
+      ['b', 'Casa', ['t1']],
+      [null, 'Sin carpeta', ['t2', 't4', 't5']],
+    ],
+  );
+});
+
+test('groupTasksByFolder sin carpetas devuelve solo "Sin carpeta"', () => {
+  const groups = groupTasksByFolder([], []);
+  assert.deepEqual(groups, [{ id: null, nombre: 'Sin carpeta', tasks: [] }]);
+});
+
+test('assignTasksToFolder cambia solo carpeta_id de las tareas indicadas', () => {
+  const [a, b, c] = [createTask('Uno'), createTask('Dos'), createTask('Tres', new Date(), 'x')];
+  const next = assignTasksToFolder([a, b, c], [a.id, c.id], 'y');
+  assert.deepEqual(next, [{ ...a, carpeta_id: 'y' }, b, { ...c, carpeta_id: 'y' }]);
+  assert.equal(a.carpeta_id, null, 'no muta');
 });
 
 test('deleteTask quita solo la tarea indicada', () => {

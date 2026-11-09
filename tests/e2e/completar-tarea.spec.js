@@ -37,14 +37,14 @@ test('criterio 1: la tarea completada sigue completada al recargar', async ({ pa
   await page
     .getByTestId('task-item')
     .filter({ hasText: 'Comprar leche' })
-    .getByRole('checkbox')
+    .getByRole('checkbox', { name: /^Completada:/ })
     .check();
 
   await page.reload();
 
   const done = page.getByTestId('task-item').filter({ hasText: 'Comprar leche' });
   const pending = page.getByTestId('task-item').filter({ hasText: 'Pagar luz' });
-  await expect(done.getByRole('checkbox')).toBeChecked();
+  await expect(done.getByRole('checkbox', { name: /^Completada:/ })).toBeChecked();
   await expect(done.getByTestId('task-title')).toHaveCSS('text-decoration-line', 'line-through');
-  await expect(pending.getByRole('checkbox')).not.toBeChecked();
+  await expect(pending.getByRole('checkbox', { name: /^Completada:/ })).not.toBeChecked();
 });

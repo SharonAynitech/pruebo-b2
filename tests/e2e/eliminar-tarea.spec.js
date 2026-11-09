@@ -50,7 +50,7 @@ test('criterio 1: la tarea eliminada no vuelve al recargar', async ({ page }) =>
 
   // También se pueden eliminar tareas completadas.
   const item = page.getByTestId('task-item').filter({ hasText: 'Comprar leche' });
-  await item.getByRole('checkbox').check();
+  await item.getByRole('checkbox', { name: /^Completada:/ }).check();
   await item.getByRole('button', { name: 'Eliminar' }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Eliminar' }).click();
   await expect(page.getByTestId('task-title')).toHaveText(['Pagar luz']);

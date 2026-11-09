@@ -128,6 +128,7 @@ button.secundario {
 
 button.secundario:hover {
   color: var(--color-accent-hover);
+  background: var(--color-bg);
   border-color: var(--color-accent-hover);
 }
 
@@ -350,6 +351,126 @@ button.icono {
 
 .vacio {
   margin: 0;
+}
+
+.tareas-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.vistas {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.vistas button[aria-pressed='true'],
+.vistas button[aria-pressed='true']:hover {
+  color: var(--color-bg);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.grupos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.grupo-cabecera {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.grupo-cabecera h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.grupo-conteo {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.tareas li.seleccionada {
+  border-color: var(--color-accent);
+}
+
+.tarea .seleccionar-celda {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  padding-right: var(--space-4);
+  border-right: 1px solid var(--color-border);
+}
+
+.tarea input.seleccionar {
+  accent-color: var(--color-accent);
+}
+
+.tablero {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+.columna {
+  flex: 0 0 12rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.tareas .columna li.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-2) var(--space-4);
+}
+
+.seleccion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.seleccion-conteo {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
