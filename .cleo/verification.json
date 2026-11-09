@@ -79,7 +79,7 @@
       ]
     },
     "US-02-1": {
-      "criteria_digest": "1db1aae8accbdae52613d04c91929eaa584a232dee7a7c5b4e3a71795ab0ca5f",
+      "criteria_digest": "e4164b66ae7993288d6925f8fdb9d00a10ab984bd360f6c547eb95ed4422a426",
       "cases": [
         {
           "criterion_index": 0,
@@ -90,39 +90,36 @@
             },
             {
               "action": "fill",
-              "selector": "input[name=titulo]",
-              "value": "Comprar leche"
+              "selector": "input[name=carpeta-nombre]",
+              "value": "Trabajo"
+            },
+            {
+              "action": "fill",
+              "selector": "input[name=carpeta-descripcion]",
+              "value": "Pendientes de la oficina"
             },
             {
               "action": "click",
-              "selector": "button[type=submit]"
+              "selector": "form.nueva-carpeta button[type=submit]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=folder-item]",
+              "value": 1
             },
             {
               "action": "text",
-              "selector": "[data-testid=task-list]",
-              "value": "Comprar leche"
-            },
-            {
-              "action": "visible",
-              "selector": "[data-testid=task-item] [data-testid=task-date]"
+              "selector": "[data-testid=folder-name]",
+              "value": "Trabajo"
             },
             {
               "action": "goto",
               "path": "/"
             },
             {
-              "action": "count",
-              "selector": "[data-testid=task-item]",
-              "value": 1
-            },
-            {
               "action": "text",
-              "selector": "[data-testid=task-item] [data-testid=task-title]",
-              "value": "Comprar leche"
-            },
-            {
-              "action": "visible",
-              "selector": "[data-testid=task-item] [data-testid=task-date]"
+              "selector": "[data-testid=folder-list] [data-testid=folder-name]",
+              "value": "Trabajo"
             }
           ]
         },
@@ -135,26 +132,26 @@
             },
             {
               "action": "fill",
-              "selector": "input[name=titulo]",
+              "selector": "input[name=carpeta-nombre]",
               "value": "   "
             },
             {
               "action": "click",
-              "selector": "button[type=submit]"
+              "selector": "form.nueva-carpeta button[type=submit]"
             },
             {
               "action": "text",
-              "selector": "[role=alert]",
-              "value": "El título es obligatorio"
+              "selector": "form.nueva-carpeta [role=alert]",
+              "value": "El nombre es obligatorio"
             },
             {
               "action": "count",
-              "selector": "[data-testid=task-item]",
+              "selector": "[data-testid=folder-item]",
               "value": 0
             },
             {
               "action": "visible",
-              "selector": "input[name=titulo]"
+              "selector": "input[name=carpeta-nombre][aria-invalid=true]"
             }
           ]
         }

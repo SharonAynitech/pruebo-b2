@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 
 async function crearTarea(page, titulo) {
   await page.getByLabel('Título', { exact: true }).fill(titulo);
-  await page.getByRole('button', { name: 'Crear' }).click();
+  await page.locator('form.crear').getByRole('button', { name: 'Crear' }).click();
 }
 
 test('criterio 0: el título editado se muestra y persiste al recargar', async ({ page }) => {

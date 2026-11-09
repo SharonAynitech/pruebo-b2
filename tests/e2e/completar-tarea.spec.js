@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 
 async function crearTarea(page, titulo) {
   await page.getByLabel('Título', { exact: true }).fill(titulo);
-  await page.getByRole('button', { name: 'Crear' }).click();
+  await page.locator('form.crear').getByRole('button', { name: 'Crear' }).click();
 }
 
 test('criterio 0: al marcarla, la tarea se ve tachada; al desmarcarla vuelve a pendiente', async ({ page }) => {

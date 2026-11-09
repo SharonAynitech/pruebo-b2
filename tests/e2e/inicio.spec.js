@@ -18,7 +18,7 @@ test('criterio 0: al abrir la URL se ve el nombre del proyecto', async ({ page }
 test('criterio 1: crear y editar una tarea persiste el título actualizado tras recargar', async ({ page }) => {
   await page.goto('/');
   await page.getByLabel('Título', { exact: true }).fill('Comprar leche');
-  await page.getByRole('button', { name: 'Crear' }).click();
+  await page.locator('form.crear').getByRole('button', { name: 'Crear' }).click();
 
   const item = page.getByTestId('task-item');
   await expect(item).toHaveCount(1);
