@@ -1,7 +1,7 @@
 {
   "stories": {
     "US-01-1": {
-      "criteria_digest": "426842596b50b0c7f5dc8a0fe47c1c3b9bbb315b1ab12aec0b86bc9cec44bc46",
+      "criteria_digest": "02b8c06733cb95ecf81a5f4d90843f9090bb1219ee92d7ba4aecf58364b42909",
       "cases": [
         {
           "criterion_index": 0,
@@ -29,14 +29,50 @@
               "path": "/"
             },
             {
-              "action": "count",
-              "selector": "input[type=password]",
-              "value": 0
+              "action": "fill",
+              "selector": "input[name=titulo]",
+              "value": "Comprar leche"
+            },
+            {
+              "action": "click",
+              "selector": "form.crear button[type=submit]"
             },
             {
               "action": "text",
-              "selector": "h1",
-              "value": "prueba"
+              "selector": "[data-testid=task-title]",
+              "value": "Comprar leche"
+            },
+            {
+              "action": "click",
+              "selector": "[data-testid=task-item] [data-testid=task-edit]"
+            },
+            {
+              "action": "fill",
+              "selector": "input[name=titulo-edicion]",
+              "value": "Comprar pan"
+            },
+            {
+              "action": "click",
+              "selector": "[data-testid=task-save]"
+            },
+            {
+              "action": "text",
+              "selector": "[data-testid=task-title]",
+              "value": "Comprar pan"
+            },
+            {
+              "action": "goto",
+              "path": "/"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=task-item]",
+              "value": 1
+            },
+            {
+              "action": "text",
+              "selector": "[data-testid=task-title]",
+              "value": "Comprar pan"
             }
           ]
         }
