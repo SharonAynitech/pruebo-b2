@@ -1,12 +1,8 @@
 import { useRef, useState } from 'react';
 import { countTasksInFolder, isValidFolderName } from './folders.js';
-import { formatDate } from './tasks.js';
+import FolderItem from './FolderItem.jsx';
 
-function taskCountLabel(n) {
-  return n === 1 ? '1 tarea' : `${n} tareas`;
-}
-
-export default function FolderManager({ folders, tasks, onCreate }) {
+export default function FolderManager({ folders, tasks, onCreate, onRename }) {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [error, setError] = useState('');
@@ -93,25 +89,12 @@ export default function FolderManager({ folders, tasks, onCreate }) {
         ) : (
           <ul data-testid="folder-list">
             {folders.map((folder) => (
-              <li key={folder.id} data-testid="folder-item">
-                <div className="carpeta-texto">
-                  <span data-testid="folder-name" className="carpeta-nombre">
-                    {folder.nombre}
-                  </span>
-                  {folder.descripcion && <span className="carpeta-descripcion">{folder.descripcion}</span>}
-                  <span className="carpeta-meta">
-                    <span data-testid="folder-count">
-                      {taskCountLabel(countTasksInFolder(tasks, folder.id))}
-                    </span>
-                    {folder.fecha_creacion && (
-                      <>
-                        {' · '}
-                        <time dateTime={folder.fecha_creacion}>{formatDate(folder.fecha_creacion)}</time>
-                      </>
-                    )}
-                  </span>
-                </div>
-              </li>
+              <FolderItem
+                key={folder.id}
+                folder={folder}
+                taskCount={countTasksInFolder(tasks, folder.id)}
+                onRename={onRename}
+              />
             ))}
           </ul>
         )}
