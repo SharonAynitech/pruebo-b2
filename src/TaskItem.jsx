@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { formatDate, isValidTitle } from './tasks.js';
 
-function PencilIcon() {
+export function PencilIcon() {
   return (
     <svg
       width="16"

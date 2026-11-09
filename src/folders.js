@@ -21,6 +21,11 @@ export function createFolder(nombre, descripcion = '', now = new Date()) {
   };
 }
 
+export function renameFolder(folders, id, nombre) {
+  if (!isValidFolderName(nombre)) throw new Error('El nombre es obligatorio');
+  return folders.map((folder) => (folder.id === id ? { ...folder, nombre: nombre.trim() } : folder));
+}
+
 export function countTasksInFolder(tasks, carpetaId) {
   return tasks.filter((task) => task.carpeta_id === carpetaId).length;
 }

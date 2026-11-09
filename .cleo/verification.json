@@ -158,7 +158,7 @@
       ]
     },
     "US-02-2": {
-      "criteria_digest": "ba1392263a25cf948dd9d7e331cfd8203b0ae3b2d02a4d93022047b0ace55f5d",
+      "criteria_digest": "77092b82554dd4e63f2dbfdd2ad802e227fe2a49c6875c2b48ef472d307afe41",
       "cases": [
         {
           "criterion_index": 0,
@@ -169,35 +169,35 @@
             },
             {
               "action": "fill",
-              "selector": "input[name=titulo]",
-              "value": "Comprar leche"
+              "selector": "input[name=carpeta-nombre]",
+              "value": "Trabajo"
             },
             {
               "action": "click",
-              "selector": "form.crear button[type=submit]"
+              "selector": "form.nueva-carpeta button[type=submit]"
             },
             {
               "action": "text",
-              "selector": "[data-testid=task-title]",
-              "value": "Comprar leche"
+              "selector": "[data-testid=folder-name]",
+              "value": "Trabajo"
             },
             {
               "action": "click",
-              "selector": "[data-testid=task-item] [data-testid=task-edit]"
+              "selector": "[data-testid=folder-item] [data-testid=folder-rename]"
             },
             {
               "action": "fill",
-              "selector": "input[name=titulo-edicion]",
-              "value": "Comprar pan"
+              "selector": "input[name=carpeta-renombrar]",
+              "value": "Oficina"
             },
             {
               "action": "click",
-              "selector": "[data-testid=task-save]"
+              "selector": "[data-testid=folder-save]"
             },
             {
               "action": "text",
-              "selector": "[data-testid=task-title]",
-              "value": "Comprar pan"
+              "selector": "[data-testid=folder-list] [data-testid=folder-name]",
+              "value": "Oficina"
             },
             {
               "action": "goto",
@@ -205,13 +205,13 @@
             },
             {
               "action": "count",
-              "selector": "[data-testid=task-item]",
+              "selector": "[data-testid=folder-item]",
               "value": 1
             },
             {
               "action": "text",
-              "selector": "[data-testid=task-title]",
-              "value": "Comprar pan"
+              "selector": "[data-testid=folder-list] [data-testid=folder-name]",
+              "value": "Oficina"
             }
           ]
         },
@@ -224,48 +224,53 @@
             },
             {
               "action": "fill",
-              "selector": "input[name=titulo]",
-              "value": "Comprar leche"
+              "selector": "input[name=carpeta-nombre]",
+              "value": "Trabajo"
             },
             {
               "action": "click",
-              "selector": "form.crear button[type=submit]"
+              "selector": "form.nueva-carpeta button[type=submit]"
             },
             {
               "action": "text",
-              "selector": "[data-testid=task-title]",
-              "value": "Comprar leche"
+              "selector": "[data-testid=folder-name]",
+              "value": "Trabajo"
             },
             {
               "action": "click",
-              "selector": "[data-testid=task-item] [data-testid=task-edit]"
+              "selector": "[data-testid=folder-item] [data-testid=folder-rename]"
             },
             {
               "action": "fill",
-              "selector": "input[name=titulo-edicion]",
+              "selector": "input[name=carpeta-renombrar]",
               "value": "   "
             },
             {
               "action": "click",
-              "selector": "[data-testid=task-save]"
+              "selector": "[data-testid=folder-save]"
             },
             {
               "action": "text",
-              "selector": "[data-testid=task-item] [role=alert]",
-              "value": "El título es obligatorio"
+              "selector": "[data-testid=folder-item] [role=alert]",
+              "value": "El nombre es obligatorio"
             },
             {
               "action": "visible",
-              "selector": "input[name=titulo-edicion]"
+              "selector": "input[name=carpeta-renombrar][aria-invalid=true]"
             },
             {
               "action": "goto",
               "path": "/"
             },
             {
+              "action": "count",
+              "selector": "[data-testid=folder-item]",
+              "value": 1
+            },
+            {
               "action": "text",
-              "selector": "[data-testid=task-title]",
-              "value": "Comprar leche"
+              "selector": "[data-testid=folder-list] [data-testid=folder-name]",
+              "value": "Trabajo"
             }
           ]
         }

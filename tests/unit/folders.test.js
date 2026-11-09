@@ -6,6 +6,7 @@ import {
   createFolder,
   isValidFolderName,
   loadFolders,
+  renameFolder,
   saveFolders,
 } from '../../src/folders.js';
 
@@ -60,6 +61,24 @@ test('loadFolders devuelve lista vacía con datos ausentes, corruptos o no-array
   assert.deepEqual(loadFolders(storage), []);
   storage.setItem(FOLDERS_STORAGE_KEY, '{"a":1}');
   assert.deepEqual(loadFolders(storage), []);
+});
+
+test('renameFolder cambia solo el nombre (recortado) de la carpeta indicada', () => {
+  const a = createFolder('Trabajo', 'Oficina');
+  const b = createFolder('Casa');
+  const next = renameFolder([a, b], a.id, '  Oficina  ');
+  assert.equal(next[0].nombre, 'Oficina');
+  assert.equal(next[0].id, a.id);
+  assert.equal(next[0].descripcion, 'Oficina');
+  assert.equal(next[0].fecha_creacion, a.fecha_creacion);
+  assert.deepEqual(next[1], b);
+  assert.equal(a.nombre, 'Trabajo', 'no muta la lista original');
+});
+
+test('renameFolder lanza con nombre vacío o solo espacios', () => {
+  const a = createFolder('Trabajo');
+  assert.throws(() => renameFolder([a], a.id, ''), /El nombre es obligatorio/);
+  assert.throws(() => renameFolder([a], a.id, '   '), /El nombre es obligatorio/);
 });
 
 test('countTasksInFolder cuenta solo las tareas de esa carpeta', () => {

@@ -8,7 +8,7 @@ import {
   toggleTaskCompleted,
   updateTaskTitle,
 } from './tasks.js';
-import { createFolder, loadFolders, saveFolders } from './folders.js';
+import { createFolder, loadFolders, renameFolder, saveFolders } from './folders.js';
 import TaskItem from './TaskItem.jsx';
 import ConfirmDelete from './ConfirmDelete.jsx';
 import FolderManager from './FolderManager.jsx';
@@ -60,11 +60,18 @@ export default function App() {
     setPendingDelete(null);
   }
 
-  function handleCreateFolder(nombre, descripcion) {
-    const next = [...folders, createFolder(nombre, descripcion)];
+  function commitFolders(next, text) {
     saveFolders(next);
     setFolders(next);
-    setNotice({ text: 'Carpeta creada', id: Date.now() });
+    setNotice({ text, id: Date.now() });
+  }
+
+  function handleCreateFolder(nombre, descripcion) {
+    commitFolders([...folders, createFolder(nombre, descripcion)], 'Carpeta creada');
+  }
+
+  function handleRenameFolder(id, nombre) {
+    commitFolders(renameFolder(folders, id, nombre), 'Carpeta renombrada');
   }
 
   return (
@@ -73,7 +80,12 @@ export default function App() {
         <h1>prueba</h1>
       </header>
 
-      <FolderManager folders={folders} tasks={tasks} onCreate={handleCreateFolder} />
+      <FolderManager
+        folders={folders}
+        tasks={tasks}
+        onCreate={handleCreateFolder}
+        onRename={handleRenameFolder}
+      />
 
       <form className="crear" onSubmit={handleSubmit} noValidate>
         <label htmlFor="titulo">Título</label>
