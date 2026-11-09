@@ -34,6 +34,12 @@ test('createTask recorta el título, registra la fecha y empieza pendiente', () 
   assert.ok(task.id);
 });
 
+test('createTask guarda la carpeta elegida o null si no hay', () => {
+  assert.equal(createTask('Uno').carpeta_id, null);
+  assert.equal(createTask('Dos', new Date(), 'c1').carpeta_id, 'c1');
+  assert.equal(createTask('Tres', new Date(), '').carpeta_id, null);
+});
+
 test('createTask lanza con título inválido', () => {
   assert.throws(() => createTask('   '));
 });

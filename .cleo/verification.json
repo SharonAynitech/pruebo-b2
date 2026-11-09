@@ -277,7 +277,7 @@
       ]
     },
     "US-02-3": {
-      "criteria_digest": "fbe329029878d77381308ea71863a5624abd9494e10ecfa26c6b2c7b8af4b66d",
+      "criteria_digest": "cffba908649e107d6f127d225d44f21c7b4317dc393c6c756ae86b6542d86ac4",
       "cases": [
         {
           "criterion_index": 0,
@@ -288,35 +288,56 @@
             },
             {
               "action": "fill",
-              "selector": "input[name=titulo]",
-              "value": "Comprar leche"
+              "selector": "input[name=carpeta-nombre]",
+              "value": "Trabajo"
             },
             {
               "action": "click",
-              "selector": "form.crear button[type=submit]"
-            },
-            {
-              "action": "text",
-              "selector": "[data-testid=task-title]",
-              "value": "Comprar leche"
+              "selector": "form.nueva-carpeta button[type=submit]"
             },
             {
               "action": "count",
-              "selector": "[data-testid=task-item][data-completed=true]",
-              "value": 0
-            },
-            {
-              "action": "check",
-              "selector": "[data-testid=task-item] [data-testid=task-toggle]"
-            },
-            {
-              "action": "count",
-              "selector": "[data-testid=task-item][data-completed=true]",
+              "selector": "[data-testid=folder-item]",
               "value": 1
             },
             {
+              "action": "text",
+              "selector": "[data-testid=folder-count]",
+              "value": "0 tareas"
+            },
+            {
+              "action": "click",
+              "selector": "[data-testid=folder-item] [data-testid=folder-delete]"
+            },
+            {
               "action": "visible",
-              "selector": "[data-testid=task-item][data-completed=true] [data-testid=task-title]"
+              "selector": "[data-testid=delete-folder-dialog]"
+            },
+            {
+              "action": "click",
+              "selector": "[data-testid=confirm-delete-folder]"
+            },
+            {
+              "action": "hidden",
+              "selector": "[data-testid=delete-folder-dialog]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=folder-item]",
+              "value": 0
+            },
+            {
+              "action": "goto",
+              "path": "/"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=folder-item]",
+              "value": 0
+            },
+            {
+              "action": "visible",
+              "selector": "#carpetas-titulo"
             }
           ]
         },
@@ -329,30 +350,105 @@
             },
             {
               "action": "fill",
+              "selector": "input[name=carpeta-nombre]",
+              "value": "Trabajo"
+            },
+            {
+              "action": "click",
+              "selector": "form.nueva-carpeta button[type=submit]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=folder-item]",
+              "value": 1
+            },
+            {
+              "action": "fill",
               "selector": "input[name=titulo]",
-              "value": "Comprar leche"
+              "value": "Informe"
+            },
+            {
+              "action": "select",
+              "selector": "select[name=carpeta]",
+              "value": "Trabajo"
             },
             {
               "action": "click",
               "selector": "form.crear button[type=submit]"
             },
             {
-              "action": "text",
-              "selector": "[data-testid=task-title]",
+              "action": "count",
+              "selector": "[data-testid=task-item]",
+              "value": 1
+            },
+            {
+              "action": "fill",
+              "selector": "input[name=titulo]",
+              "value": "Reunión"
+            },
+            {
+              "action": "select",
+              "selector": "select[name=carpeta]",
+              "value": "Trabajo"
+            },
+            {
+              "action": "click",
+              "selector": "form.crear button[type=submit]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=task-item]",
+              "value": 2
+            },
+            {
+              "action": "fill",
+              "selector": "input[name=titulo]",
               "value": "Comprar leche"
             },
             {
+              "action": "select",
+              "selector": "select[name=carpeta]",
+              "value": ""
+            },
+            {
+              "action": "click",
+              "selector": "form.crear button[type=submit]"
+            },
+            {
               "action": "count",
-              "selector": "[data-testid=task-item][data-completed=true]",
+              "selector": "[data-testid=task-item]",
+              "value": 3
+            },
+            {
+              "action": "text",
+              "selector": "[data-testid=folder-count]",
+              "value": "2 tareas"
+            },
+            {
+              "action": "click",
+              "selector": "[data-testid=folder-item] [data-testid=folder-delete]"
+            },
+            {
+              "action": "visible",
+              "selector": "[data-testid=delete-folder-dialog]"
+            },
+            {
+              "action": "text",
+              "selector": "[data-testid=delete-folder-count]",
+              "value": "También se eliminarán 2 tareas de esta carpeta."
+            },
+            {
+              "action": "click",
+              "selector": "[data-testid=confirm-delete-folder]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=folder-item]",
               "value": 0
             },
             {
-              "action": "check",
-              "selector": "[data-testid=task-item] [data-testid=task-toggle]"
-            },
-            {
               "action": "count",
-              "selector": "[data-testid=task-item][data-completed=true]",
+              "selector": "[data-testid=task-item]",
               "value": 1
             },
             {
@@ -361,17 +457,18 @@
             },
             {
               "action": "count",
-              "selector": "[data-testid=task-item][data-completed=true]",
-              "value": 1
+              "selector": "[data-testid=folder-item]",
+              "value": 0
             },
             {
               "action": "count",
-              "selector": "[data-testid=task-toggle]:checked",
+              "selector": "[data-testid=task-item]",
               "value": 1
             },
             {
-              "action": "visible",
-              "selector": "[data-testid=task-item][data-completed=true] [data-testid=task-title]"
+              "action": "text",
+              "selector": "[data-testid=task-title]",
+              "value": "Comprar leche"
             }
           ]
         }

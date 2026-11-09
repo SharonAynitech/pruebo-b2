@@ -11,13 +11,14 @@ function newId() {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
 
-export function createTask(titulo, now = new Date()) {
+export function createTask(titulo, now = new Date(), carpetaId = null) {
   if (!isValidTitle(titulo)) throw new Error('El título es obligatorio');
   return {
     id: newId(),
     titulo: titulo.trim(),
     fecha_creacion: now.toISOString(),
     completada: false,
+    carpeta_id: carpetaId || null,
   };
 }
 

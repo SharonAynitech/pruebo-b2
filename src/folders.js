@@ -26,6 +26,14 @@ export function renameFolder(folders, id, nombre) {
   return folders.map((folder) => (folder.id === id ? { ...folder, nombre: nombre.trim() } : folder));
 }
 
+// Borra la carpeta y, en cascada, las tareas que pertenecen a ella.
+export function deleteFolder(folders, tasks, id) {
+  return {
+    folders: folders.filter((folder) => folder.id !== id),
+    tasks: tasks.filter((task) => task.carpeta_id !== id),
+  };
+}
+
 export function countTasksInFolder(tasks, carpetaId) {
   return tasks.filter((task) => task.carpeta_id === carpetaId).length;
 }
