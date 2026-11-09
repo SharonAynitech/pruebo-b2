@@ -8,19 +8,29 @@ import {
   toggleTaskCompleted,
   updateTaskTitle,
 } from './tasks.js';
-import { createFolder, loadFolders, renameFolder, saveFolders } from './folders.js';
+import {
+  countTasksInFolder,
+  createFolder,
+  deleteFolder,
+  loadFolders,
+  renameFolder,
+  saveFolders,
+} from './folders.js';
 import TaskItem from './TaskItem.jsx';
 import ConfirmDelete from './ConfirmDelete.jsx';
+import ConfirmDeleteFolder from './ConfirmDeleteFolder.jsx';
 import FolderManager from './FolderManager.jsx';
 
 export default function App() {
   const [tasks, setTasks] = useState(() => loadTasks());
   const [folders, setFolders] = useState(() => loadFolders());
   const [titulo, setTitulo] = useState('');
+  const [carpetaId, setCarpetaId] = useState('');
   const [error, setError] = useState('');
   // Aviso temporal tras cada cambio; `id` reinicia el temporizador si se repite el texto.
   const [notice, setNotice] = useState(null);
   const [pendingDelete, setPendingDelete] = useState(null);
+  const [pendingFolderDelete, setPendingFolderDelete] = useState(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -42,7 +52,8 @@ export default function App() {
       inputRef.current?.focus();
       return;
     }
-    commit([createTask(titulo), ...tasks], 'Guardado');
+    const carpeta = folders.some((f) => f.id === carpetaId) ? carpetaId : null;
+    commit([createTask(titulo, new Date(), carpeta), ...tasks], 'Guardado');
     setTitulo('');
     setError('');
   }
@@ -74,6 +85,15 @@ export default function App() {
     commitFolders(renameFolder(folders, id, nombre), 'Carpeta renombrada');
   }
 
+  function handleDeleteFolder(id) {
+    const next = deleteFolder(folders, tasks, id);
+    saveTasks(next.tasks);
+    setTasks(next.tasks);
+    commitFolders(next.folders, 'Carpeta eliminada');
+    if (carpetaId === id) setCarpetaId('');
+    setPendingFolderDelete(null);
+  }
+
   return (
     <main className="app">
       <header>
@@ -85,6 +105,7 @@ export default function App() {
         tasks={tasks}
         onCreate={handleCreateFolder}
         onRename={handleRenameFolder}
+        onDelete={setPendingFolderDelete}
       />
 
       <form className="crear" onSubmit={handleSubmit} noValidate>
@@ -111,6 +132,22 @@ export default function App() {
             {error}
           </p>
         )}
+        <label htmlFor="carpeta">
+          Carpeta <span className="opcional">(opcional)</span>
+        </label>
+        <select
+          id="carpeta"
+          name="carpeta"
+          value={carpetaId}
+          onChange={(e) => setCarpetaId(e.target.value)}
+        >
+          <option value="">Sin carpeta</option>
+          {folders.map((folder) => (
+            <option key={folder.id} value={folder.id}>
+              {folder.nombre}
+            </option>
+          ))}
+        </select>
       </form>
 
       <section className="tareas" aria-labelledby="tareas-titulo">
@@ -141,6 +178,13 @@ export default function App() {
         task={pendingDelete}
         onConfirm={handleDelete}
         onCancel={() => setPendingDelete(null)}
+      />
+
+      <ConfirmDeleteFolder
+        folder={pendingFolderDelete}
+        taskCount={pendingFolderDelete ? countTasksInFolder(tasks, pendingFolderDelete.id) : 0}
+        onConfirm={handleDeleteFolder}
+        onCancel={() => setPendingFolderDelete(null)}
       />
     </main>
   );

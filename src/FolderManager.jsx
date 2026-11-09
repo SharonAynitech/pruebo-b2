@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { countTasksInFolder, isValidFolderName } from './folders.js';
 import FolderItem from './FolderItem.jsx';
 
-export default function FolderManager({ folders, tasks, onCreate, onRename }) {
+export default function FolderManager({ folders, tasks, onCreate, onRename, onDelete }) {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [error, setError] = useState('');
@@ -94,6 +94,7 @@ export default function FolderManager({ folders, tasks, onCreate, onRename }) {
                 folder={folder}
                 taskCount={countTasksInFolder(tasks, folder.id)}
                 onRename={onRename}
+                onDelete={onDelete}
               />
             ))}
           </ul>

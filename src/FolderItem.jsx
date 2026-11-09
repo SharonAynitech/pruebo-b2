@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { isValidFolderName } from './folders.js';
 import { formatDate } from './tasks.js';
-import { PencilIcon } from './TaskItem.jsx';
+import { PencilIcon, TrashIcon } from './TaskItem.jsx';
 
 function taskCountLabel(n) {
   return n === 1 ? '1 tarea' : `${n} tareas`;
 }
 
-export default function FolderItem({ folder, taskCount, onRename }) {
+export default function FolderItem({ folder, taskCount, onRename, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(folder.nombre);
   const [error, setError] = useState('');
@@ -112,6 +112,16 @@ export default function FolderItem({ folder, taskCount, onRename }) {
           >
             <PencilIcon />
             Renombrar
+          </button>
+          <button
+            type="button"
+            className="secundario icono"
+            data-testid="folder-delete"
+            aria-label={`Eliminar ${folder.nombre}`}
+            title="Eliminar"
+            onClick={() => onDelete(folder)}
+          >
+            <TrashIcon />
           </button>
         </div>
       )}

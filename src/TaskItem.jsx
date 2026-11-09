@@ -20,7 +20,7 @@ export function PencilIcon() {
   );
 }
 
-function TrashIcon() {
+export function TrashIcon() {
   return (
     <svg
       width="16"

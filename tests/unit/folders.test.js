@@ -4,6 +4,7 @@ import {
   FOLDERS_STORAGE_KEY,
   countTasksInFolder,
   createFolder,
+  deleteFolder,
   isValidFolderName,
   loadFolders,
   renameFolder,
@@ -79,6 +80,30 @@ test('renameFolder lanza con nombre vacío o solo espacios', () => {
   const a = createFolder('Trabajo');
   assert.throws(() => renameFolder([a], a.id, ''), /El nombre es obligatorio/);
   assert.throws(() => renameFolder([a], a.id, '   '), /El nombre es obligatorio/);
+});
+
+test('deleteFolder quita la carpeta y solo sus tareas, sin mutar', () => {
+  const a = createFolder('Trabajo');
+  const b = createFolder('Casa');
+  const tasks = [
+    { id: 't1', carpeta_id: a.id },
+    { id: 't2', carpeta_id: null },
+    { id: 't3', carpeta_id: b.id },
+    { id: 't4', carpeta_id: a.id },
+    { id: 't5' },
+  ];
+  const next = deleteFolder([a, b], tasks, a.id);
+  assert.deepEqual(next.folders, [b]);
+  assert.deepEqual(next.tasks.map((t) => t.id), ['t2', 't3', 't5']);
+  assert.equal(tasks.length, 5);
+});
+
+test('deleteFolder sin tareas solo quita la carpeta', () => {
+  const a = createFolder('Trabajo');
+  const tasks = [{ id: 't1', carpeta_id: null }];
+  const next = deleteFolder([a], tasks, a.id);
+  assert.deepEqual(next.folders, []);
+  assert.deepEqual(next.tasks, tasks);
 });
 
 test('countTasksInFolder cuenta solo las tareas de esa carpeta', () => {
