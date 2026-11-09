@@ -171,6 +171,7 @@ export default function App() {
         <select
           id="carpeta"
           name="carpeta"
+          aria-describedby="carpeta-ayuda"
           value={carpetaId}
           onChange={(e) => setCarpetaId(e.target.value)}
         >
@@ -181,6 +182,10 @@ export default function App() {
             </option>
           ))}
         </select>
+        <p id="carpeta-ayuda" className="ayuda">
+          La tarea quedará en la carpeta que elijas. Déjalo en «Sin carpeta» para crearla sin
+          agrupar.
+        </p>
       </form>
 
       <section className="tareas" aria-labelledby="tareas-titulo">

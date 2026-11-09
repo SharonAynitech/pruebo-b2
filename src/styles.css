@@ -92,6 +92,12 @@ select:focus-visible {
   color: var(--color-text-secondary);
 }
 
+.ayuda {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
 .confirmar-nombre {
   color: var(--color-text-primary);
   font-weight: 500;

@@ -1360,6 +1360,147 @@
           ]
         }
       ]
+    },
+    "US-03-2": {
+      "criteria_digest": "3fbe6e523969eb3884a45a8a1f5505fd8ed3362fc077c7b2003beb59489ebbe6",
+      "cases": [
+        {
+          "criterion_index": 0,
+          "steps": [
+            {
+              "action": "goto",
+              "path": "/"
+            },
+            {
+              "action": "fill",
+              "selector": "input[name=carpeta-nombre]",
+              "value": "Trabajo"
+            },
+            {
+              "action": "click",
+              "selector": "form.nueva-carpeta button[type=submit]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=folder-item]",
+              "value": 1
+            },
+            {
+              "action": "fill",
+              "selector": "input[name=carpeta-nombre]",
+              "value": "Casa"
+            },
+            {
+              "action": "click",
+              "selector": "form.nueva-carpeta button[type=submit]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=folder-item]",
+              "value": 2
+            },
+            {
+              "action": "fill",
+              "selector": "input[name=titulo]",
+              "value": "Informe"
+            },
+            {
+              "action": "select",
+              "selector": "select[name=carpeta]",
+              "value": "Trabajo"
+            },
+            {
+              "action": "click",
+              "selector": "form.crear button[type=submit]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=task-group][data-group=\"Trabajo\"] [data-testid=task-item]",
+              "value": 1
+            },
+            {
+              "action": "text",
+              "selector": "[data-testid=task-group][data-group=\"Trabajo\"] [data-testid=task-title]",
+              "value": "Informe"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=task-group][data-group=\"Sin carpeta\"] [data-testid=task-item]",
+              "value": 0
+            },
+            {
+              "action": "goto",
+              "path": "/"
+            },
+            {
+              "action": "text",
+              "selector": "[data-testid=task-group][data-group=\"Trabajo\"] [data-testid=task-title]",
+              "value": "Informe"
+            }
+          ]
+        },
+        {
+          "criterion_index": 1,
+          "steps": [
+            {
+              "action": "goto",
+              "path": "/"
+            },
+            {
+              "action": "fill",
+              "selector": "input[name=carpeta-nombre]",
+              "value": "Trabajo"
+            },
+            {
+              "action": "click",
+              "selector": "form.nueva-carpeta button[type=submit]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=folder-item]",
+              "value": 1
+            },
+            {
+              "action": "value",
+              "selector": "select[name=carpeta]",
+              "value": ""
+            },
+            {
+              "action": "fill",
+              "selector": "input[name=titulo]",
+              "value": "Comprar leche"
+            },
+            {
+              "action": "click",
+              "selector": "form.crear button[type=submit]"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=task-group][data-group=\"Sin carpeta\"] [data-testid=task-item]",
+              "value": 1
+            },
+            {
+              "action": "text",
+              "selector": "[data-testid=task-group][data-group=\"Sin carpeta\"] [data-testid=task-title]",
+              "value": "Comprar leche"
+            },
+            {
+              "action": "count",
+              "selector": "[data-testid=task-group][data-group=\"Trabajo\"] [data-testid=task-item]",
+              "value": 0
+            },
+            {
+              "action": "goto",
+              "path": "/"
+            },
+            {
+              "action": "text",
+              "selector": "[data-testid=task-group][data-group=\"Sin carpeta\"] [data-testid=task-title]",
+              "value": "Comprar leche"
+            }
+          ]
+        }
+      ]
     }
   }
 }
